@@ -68,11 +68,11 @@ for subject_dir in os.listdir(base_directory):
     if os.path.isdir(subject_directory):
         # Iterate through each file in the subject directory
         for filename in os.listdir(subject_directory):
-            if filename.endswith("mni_space_shape_measures.json"):
+            if filename.endswith("CC.json"):
                 json_files.append(os.path.join(subject_directory, filename))
 
 # Define the output file path
-output_file = "/beegfs_data/scratch/iandrulyte-diffusion/shape_metrics.csv"
+output_file = "/beegfs_data/scratch/iandrulyte-diffusion/shape_metrics_CC.csv"
 
 # Open the output file in write mode
 with open(output_file, 'w', newline='') as csvfile:
@@ -85,10 +85,9 @@ with open(output_file, 'w', newline='') as csvfile:
     for filename in json_files:
         # Extract the subject ID and tract name from the filename
         subject_id = filename.split("/")[-4]
-        tract_name = filename.split("/")[-1].split("CC_shape_measures.json")[0]
+        tract_name = filename.split("t0003_t0003_cc_homotopic_")[-1].split("_shape_measures")[0]
         
-        # Remove "__" and everything before that in tract name
-        tract_name = tract_name.split("__")[-1]
+
         
         # Open and read the JSON file
         try:
@@ -101,5 +100,5 @@ with open(output_file, 'w', newline='') as csvfile:
         except FileNotFoundError:
             pass
 
-print("Shape metrics have been successfully written to shape_metrics.csv.")
+print("Shape metrics have been successfully written to shape_metrics_CC.csv.")
 
